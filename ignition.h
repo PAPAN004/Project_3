@@ -9,7 +9,6 @@
 //=====[Declarations (prototypes) of public functions]=========================
 
 void inputsIgnitionInit();
-void outputsIgnitionInit();
 void delayAccumulate();
 void ignitionStateUpdate ();
 
