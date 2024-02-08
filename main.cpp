@@ -6,8 +6,10 @@
 
 int main()
 {
-    IgnitionInit();
+    ignitionInit();
     wiperInit();
     while (true);{
+        delayAccumulate();
+        ignitionStateUpdate();
     }
 }
