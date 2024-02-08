@@ -6,6 +6,8 @@
 
 int main()
 {
+    ignitionSubsystemInit();
+    wiperSubsystemInit();
     while (true);{
     }
 }
