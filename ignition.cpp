@@ -36,14 +36,7 @@ int debounce_accumulated_time_ms = 0;
 
 //=====[Declarations (prototypes) of private functions]========================
 
-void inputsInit();
-void outputsInit();
-void delayAccumulate();
-void ignitionStateUpdate ();
-
 //=====[Implementations of public functions]===================================
-//=====[Implementations of private functions]==================================
-
 void inputsInit()
 {
     ignition.mode(PullDown);
@@ -95,3 +88,6 @@ void ignitionStateUpdate () {
         }
     }
 }
+
+//=====[Implementations of private functions]==================================
+
