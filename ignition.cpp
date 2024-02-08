@@ -37,15 +37,13 @@ int debounce_accumulated_time_ms = 0;
 //=====[Declarations (prototypes) of private functions]========================
 
 //=====[Implementations of public functions]===================================
-void inputsInit()
+void ignitionInit()
 {
     ignition.mode(PullDown);
     driverSeat.mode(PullDown);
-}
 
-void outputsInit()
-{
     engine.write(OFF);
+    
 }
 
 void delayAccumulate() {
