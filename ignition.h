@@ -8,6 +8,11 @@
 
 //=====[Declarations (prototypes) of public functions]=========================
 
+void inputsInit();
+void ignitionStateUpdate ();
+void outputsInit();
+void delayAccumulate();
+
 //=====[#include guards - end]=================================================
 
 #endif
