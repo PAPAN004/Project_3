@@ -6,7 +6,7 @@
 
 int main()
 {
-    ignitionInit();
+    IgnitionInit();
     wiperInit();
     while (true);{
     }
