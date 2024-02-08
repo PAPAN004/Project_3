@@ -1,4 +1,6 @@
 //=====[#include guards - begin]===============================================
+#ifndef _IGNITION_H_
+#define _IGNITION_H_
 
 //=====[Declaration of public defines]=========================================
 
@@ -8,4 +10,4 @@
 
 //=====[#include guards - end]=================================================
 
-#endif // _MODULE_TEMPLATE_H_
+#endif
