@@ -6,10 +6,14 @@
 
 int main()
 {
+    intMode = INT_SHORT;
+    wMode = W_OFF;
     ignitionInit();
     wiperInit();
     while (true);{
         delayAccumulate();
         ignitionStateUpdate();
+        wModeUpdate();
+        intModeUpdate();
     }
 }
