@@ -1,10 +1,12 @@
 //=====[#include guards - begin]===============================================
+
 #ifndef _WIPER_H_
 #define _WIPER_H_
 
 //=====[Declaration of public defines]=========================================
 
 //=====[Declaration of public data types]======================================
+
 typedef enum wMode {
     W_HIGH,
     W_LO,
@@ -20,7 +22,11 @@ typedef enum intMode {
 
 wMode_t wiperMode;
 intMode_t intervalMode;
+
 //=====[Declarations (prototypes) of public functions]=========================
+
+void wModeUpdate();
+void intModeUpdate();
 
 //=====[#include guards - end]=================================================
 
