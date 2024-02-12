@@ -8,6 +8,7 @@ int main()
 {
     intervalMode = INT_SHORT;
     wiperMode = W_OFF;
+    ignitionState = B_OFF;
     ignitionInit();
     wiperInit();
     while (true);{
