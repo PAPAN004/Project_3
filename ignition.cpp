@@ -24,6 +24,7 @@ ButtonState_t ignitionState;
 
 DigitalIn ignition(BUTTON1);
 DigitalIn driverSeat(D4);
+
 DigitalOut engine(LED2);
 
 //=====[Declaration of external public global variables]=======================
