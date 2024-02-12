@@ -6,8 +6,8 @@
 
 int main()
 {
-    intMode = INT_SHORT;
-    wMode = W_OFF;
+    intervalMode = INT_SHORT;
+    wiperMode = W_OFF;
     ignitionInit();
     wiperInit();
     while (true);{
