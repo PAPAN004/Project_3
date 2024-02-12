@@ -17,6 +17,11 @@
 
 //=====[Declaration and initialization of public global objects]===============
 
+AnalogIn modePotentiometer(A0);
+AnalogIn intPotentiometer(A1);
+
+PwmOut wiper(PF_9);
+
 //=====[Declaration of external public global variables]=======================
 
 //=====[Declaration and initialization of public global variables]=============
