@@ -5,3 +5,4 @@
 #include "wiper.h"
 //=====[Declaration of private defines]========================================
 //=====[Declaration of private data types]=====================================
+//=====[Declaration and initialization of public global objects]===============
