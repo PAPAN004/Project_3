@@ -23,7 +23,7 @@ ButtonState_t ignitionState;
 //=====[Declaration and initialization of public global objects]===============
 
 DigitalIn ignition(BUTTON1);
-DigitalIn driverSeat(D4);
+DigitalIn driverSeat(D14);
 
 DigitalOut engine(LED2);
 
