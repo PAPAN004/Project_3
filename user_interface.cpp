@@ -3,6 +3,7 @@
 
 #include "user_interface.h"
 #include "display.h"
+#include "wiper.h"
 
 //=====[Declaration of private defines]========================================
 
@@ -25,50 +26,56 @@ static void userInterfaceDisplayInit()
     displayInit();
      
     displayCharPositionWrite ( 0,0 );
-    displayStringWrite( "Tmp:" );
-
-    displayCharPositionWrite ( 9,0 );
-    displayStringWrite( "Gas:" );
+    displayStringWrite( "Wiper-Mode:" );
     
     displayCharPositionWrite ( 0,1 );
-    displayStringWrite( "Alarm:" );
+    displayStringWrite( "Int-Speed:" );
 }
 
 static void userInterfaceDisplayUpdate()
 {
     static int accumulatedDisplayTime = 0;
-    char temperatureString[2] = "";
     
     if( accumulatedDisplayTime >=
         DISPLAY_REFRESH_TIME_MS ) {
 
         accumulatedDisplayTime = 0;
 
-        sprintf(temperatureString, "%.0f", temperatureSensorReadCelsius());
-        displayCharPositionWrite ( 4,0 );
-        displayStringWrite( temperatureString );
-        displayCharPositionWrite ( 6,0 );
-        displayStringWrite( "'C" );
-
-        displayCharPositionWrite ( 13,0 );
-
-        if ( gasDetectorStateRead() ) {
-            displayStringWrite( "D" );
-        } else {
-            displayStringWrite( "ND" );
+        if (wiperMode == W_OFF){
+        displayCharPositionWrite ( 12,0 );
+        displayStringWrite( "Off" );
         }
 
-        displayCharPositionWrite ( 6,1 );
-        
-        if ( sirenStateRead() ) {
-            displayStringWrite( "ON " );
-        } else {
-            displayStringWrite( "OFF" );
+        if (wiperMode == W_HIGH){
+        displayCharPositionWrite ( 12,0 );
+        displayStringWrite( "High" );
         }
+
+        if (wiperMode == W_LO){
+        displayCharPositionWrite ( 12,0 );
+        displayStringWrite( "Low" );
+        }
+
+        if (wiperMode == W_INT){
+            if (intervalMode == INT_SHORT){
+                displayCharPositionWrite ( 12,1 );
+                displayStringWrite( "Short" );
+            }
+
+            if (intervalMode == INT_MEDIUM){
+                displayCharPositionWrite ( 12,1 );
+                displayStringWrite( "Medium" );
+            }
+
+            if (intervalMode == INT_LONG){
+                displayCharPositionWrite ( 12,1 );
+                displayStringWrite( "Long" );
+            }
+        }
+
 
     } else {
         accumulatedDisplayTime =
             accumulatedDisplayTime + SYSTEM_TIME_INCREMENT_MS;        
     } 
 }
-
