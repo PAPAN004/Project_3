@@ -35,7 +35,6 @@ static void userInterfaceDisplayInit()
 static void userInterfaceDisplayUpdate()
 {
     static int accumulatedDisplayTime = 0;
-    
     if( accumulatedDisplayTime >=
         DISPLAY_REFRESH_TIME_MS ) {
 
@@ -57,6 +56,8 @@ static void userInterfaceDisplayUpdate()
         }
 
         if (wiperMode == W_INT){
+            displayCharPositionWrite ( 12,0 );
+            displayStringWrite( "Int" );
             if (intervalMode == INT_SHORT){
                 displayCharPositionWrite ( 10,1 );
                 displayStringWrite( "Short" );
