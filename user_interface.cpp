@@ -58,17 +58,17 @@ static void userInterfaceDisplayUpdate()
 
         if (wiperMode == W_INT){
             if (intervalMode == INT_SHORT){
-                displayCharPositionWrite ( 12,1 );
+                displayCharPositionWrite ( 10,1 );
                 displayStringWrite( "Short" );
             }
 
             if (intervalMode == INT_MEDIUM){
-                displayCharPositionWrite ( 12,1 );
+                displayCharPositionWrite ( 10,1 );
                 displayStringWrite( "Medium" );
             }
 
             if (intervalMode == INT_LONG){
-                displayCharPositionWrite ( 12,1 );
+                displayCharPositionWrite ( 10,1 );
                 displayStringWrite( "Long" );
             }
         }
