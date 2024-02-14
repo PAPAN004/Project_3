@@ -10,8 +10,8 @@
 #define W_HIGH_TH   0.75 
 #define INT_SHORT_TH  0.3
 #define INT_MEDIUM_TH   0.7 
-#define DUTY_MIN 0.017
-#define DUTY_MAX 0.129
+#define DUTY_MIN 0.021
+#define DUTY_MAX 0.055
 
 //=====[Declaration of private data types]=====================================
 
