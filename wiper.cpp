@@ -86,7 +86,7 @@ void wModeUpdate() {
     // pot reading is above 0.75, wipers set to interval
     else if (f > W_INT_TH)
     {
-        //wiperMode = W_INT;
+        wiperMode = W_INT;
         intModeUpdate();
     }
 }
