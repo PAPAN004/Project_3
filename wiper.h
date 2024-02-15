@@ -27,6 +27,8 @@ intMode_t intervalMode;
 //=====[Declarations (prototypes) of public functions]=========================
 
 void servoInit();
+void servoRiseUpdate();
+void servoFallUpdate();
 void wModeUpdate();
 void intModeUpdate();
 
