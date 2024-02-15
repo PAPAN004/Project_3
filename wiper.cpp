@@ -36,13 +36,13 @@ PwmOut wiper(PF_9);
 
 //=====[Implementations of public functions]===================================
 
-void posServoInit()
+void servoInit()
 {
     servo.period(PERIOD_SEC);
     servo.write(DUTY_MIN);
 }
 
-static void ServoRiseUpdate(int speed)
+void servoRiseUpdate(int speed)
 {
     float pos_rise = 0.021;
     
@@ -54,7 +54,7 @@ static void ServoRiseUpdate(int speed)
     }
 }
 
-static void ServoFallUpdate(int speed)
+void servoFallUpdate(int speed)
 {
     float pos_fall = 0.059;
     
@@ -91,7 +91,7 @@ void wModeUpdate() {
     }
 }
 
-static void intModeUpdate() {
+void intModeUpdate() {
     float f = intPotentiometer.read();
     //if (wiperMode == W_INT) {
         if (intervalMode == INT_SHORT) {
