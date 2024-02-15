@@ -17,5 +17,6 @@ int main()
         ignitionStateUpdate();
         wModeUpdate();
         intModeUpdate();
+        userInterfaceDisplayUpdate();
     }
 }
