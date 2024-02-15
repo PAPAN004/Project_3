@@ -11,6 +11,7 @@ int main()
     ignitionState = B_OFF;
     ignitionInit();
     wiperInit();
+    userInterfaceDisplayInit();
     while (true);{
         delayAccumulate();
         ignitionStateUpdate();
