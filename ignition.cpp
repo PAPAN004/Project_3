@@ -11,15 +11,6 @@
 
 //=====[Declaration of private data types]=====================================
 
-typedef enum ButtonState {
-    B_ON,
-    B_RISING,
-    B_OFF,
-    B_FALLING,
-} ButtonState_t;
-
-ButtonState_t ignitionState;
-
 //=====[Declaration and initialization of public global objects]===============
 
 DigitalIn ignition(BUTTON1);
