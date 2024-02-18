@@ -34,7 +34,7 @@ PwmOut wiper(PF_9);
 
 //=====[Declarations (prototypes) of private functions]========================
 
-static void wActivated(int speed);
+static void activateWiper(int speed);
 
 //=====[Implementations of public functions]===================================
 
@@ -53,6 +53,7 @@ void wModeUpdate() {
     switch ( wiperMode )
     {
     case(W_OFF):
+        activateWiper(10, false, true)
         // pot reading above 0.25 in this state, wipers set to low
         if (f > W_OFF_TH)
         {   
@@ -62,6 +63,8 @@ void wModeUpdate() {
     
     case(W_LOW):
 
+        activateWiper(20, true, true);
+        
         // pot reading below 0.25 in this state, wipers set to off
         if (f < W_OFF_TH)
         {
@@ -75,6 +78,9 @@ void wModeUpdate() {
         break;
 
     case(W_HIGH):
+
+        activateWiper(10, true, true);
+        
         // pot reading is below 0.50 in this state, wipers set to low
         if( f < W_LOW_TH)
         {
@@ -140,7 +146,7 @@ void intModeUpdate()
 
 //=====[Implementations of private functions]===================================
 
-static void wActivated(int speed)
+static void activateWiper(int speed, bool up, bool down)
 {
     static bool servoInstruction = true;
     static float rise_increment = 0.021;
@@ -149,29 +155,44 @@ static void wActivated(int speed)
     switch (servoInstruction)
     {
     case(true):
-        //replace this with incrementor
-        delay(speed); 
-        rise_increment = rise_increment + SPEED_INCREMENT;
-        servo.write(rise_increment);
-    
-        if (pos_rise > DUTY_MAX)
-        {    
-            servoInstruction = false;
-            rise_increment = 0.021;
-            break;
-        }
-    
-    case(false):
-        //replace this with incrementor
-        delay(speed); 
-        fall_increment = fall_increment - SPEED_INCREMENT;  
-        servo.write(fall_increment);   
-    
-        if (fall_increment < DUTY_MIN )
+        // servo will not rise unless up_down is true
+        if (up)
         {
-            servoInstruction = true
-            fall_increment = 0.059;
-            break;
+            //replace this with incrementor
+            delay(speed); 
+            rise_increment = rise_increment + SPEED_INCREMENT;
+            servo.write(rise_increment);
+    
+            if (pos_rise > DUTY_MAX)
+            {    
+                servoInstruction = false;
+                rise_increment = 0.021;
+            }
+        }
+        else
+        {
+            servoInstruction = false;
+        }
+        break;
+        
+    case(false):
+        // servo will not fall unless up_down is false 
+        if (down)
+        {
+            //replace this with incrementor
+            delay(speed); 
+            fall_increment = fall_increment - SPEED_INCREMENT;  
+            servo.write(fall_increment);   
+    
+            if (fall_increment < DUTY_MIN )
+            {
+                servoInstruction = true;
+                fall_increment = 0.059;
+            }
+        }
+        else
+        {
+            servoInstruction = true;     
         }
     default:
         servoInstruction = false;
