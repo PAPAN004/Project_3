@@ -38,11 +38,6 @@ void ignitionInit()
     ignitionState = B_OFF;
 }
 
-void delayAccumulate() {
-    delay(DELAY_MS);
-    debounce_accumulated_time_ms += 10;
-}
-
 void ignitionStateUpdate () {
     bool ds = driverSeat.read();
     bool ig = ignition.read();
