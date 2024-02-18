@@ -34,6 +34,8 @@ PwmOut wiper(PF_9);
 
 //=====[Declarations (prototypes) of private functions]========================
 
+static void servoRiseUpdate(int speed);
+static void servoFallUpdate(int speed);
 //=====[Implementations of public functions]===================================
 
 void servoInit()
@@ -42,7 +44,7 @@ void servoInit()
     servo.write(DUTY_MIN);
 }
 
-void servoRiseUpdate(int speed)
+static void servoRiseUpdate(int speed)
 {
     static float pos_rise = 0.021;
     pos_rise = pos_rise + SPEED_INCREMENT;
@@ -57,7 +59,7 @@ void servoRiseUpdate(int speed)
     }
 }
 
-void servoFallUpdate(int speed)
+static void servoFallUpdate(int speed)
 {
     static float pos_fall = 0.059;
     pos_fall = pos_fall - SPEED_INCREMENT;        
@@ -123,4 +125,4 @@ void intModeUpdate() {
     }
 }
 
-//=====[Implementations of private functions]==================================
+
