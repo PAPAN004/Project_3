@@ -35,6 +35,8 @@ PwmOut wiper(PF_9);
 
 //=====[Declaration and initialization of private global variables]============
 
+int delay_accumulated_time_ms = 0;
+
 //=====[Declarations (prototypes) of private functions]========================
 
 static void activateWiper(int speed, bool up, bool down);
