@@ -39,8 +39,7 @@ int delay_accumulated_time_ms = 0;
 
 //=====[Declarations (prototypes) of private functions]========================
 
-static void activateWiper(int speed, bool up, bool down);
-void delayAccumulate(int speed);
+static void activateWiper(int speed);
 
 //=====[Implementations of public functions]===================================
 
@@ -59,7 +58,6 @@ void wModeUpdate() {
     switch ( wiperMode )
     {
     case(W_OFF):
-        activateWiper(10, false, true)
         // pot reading above 0.25 in this state, wipers set to low
         if (f > W_OFF_TH)
         {   
@@ -69,7 +67,7 @@ void wModeUpdate() {
     
     case(W_LOW):
 
-        activateWiper(20, true, true);
+        activateWiper(20);
         
         // pot reading below 0.25 in this state, wipers set to off
         if (f < W_OFF_TH)
@@ -85,7 +83,7 @@ void wModeUpdate() {
 
     case(W_HIGH):
 
-        activateWiper(10, true, true);
+        activateWiper(10);
         
         // pot reading is below 0.50 in this state, wipers set to low
         if( f < W_LOW_TH)
@@ -161,47 +159,32 @@ static void activateWiper(int speed, bool up, bool down)
     switch (servoInstruction)
     {
     case(true):
-        // servo will not rise unless up_down is true
-        if (up)
-        {
 
-            rise_increment = rise_increment + SPEED_INCREMENT;
-            servo.write(rise_increment);
-            delayAccumulate(speed);
-    
-            if ((rise_increment >= DUTY_MAX) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
-            {    
-                servoInstruction = false;
-                delay_accumulated_time_ms = 0;
-                rise_increment = 0.021;
-            }
-        }
-        else
-        {
+        rise_increment = rise_increment + SPEED_INCREMENT;
+        servo.write(rise_increment);
+        delayAccumulate(speed);
+         
+        if ((rise_increment >= DUTY_MAX) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
+        {    
             servoInstruction = false;
+            delay_accumulated_time_ms = 0;
+            rise_increment = 0.021;
         }
         break;
         
     case(false):
-        // servo will not fall unless up_down is false 
-        if (down)
+        //replace this with incrementor
+        fall_increment = fall_increment - SPEED_INCREMENT;  
+        servo.write(fall_increment);   
+        delayAccumulate(speed);
+
+        if ((fall_increment < DUTY_MIN ) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
         {
-            //replace this with incrementor
-            fall_increment = fall_increment - SPEED_INCREMENT;  
-            servo.write(fall_increment);   
-            delayAccumulate(speed);
-    
-            if ((fall_increment < DUTY_MIN ) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
-            {
-                servoInstruction = true;
-                delay_accumulated_time_ms = 0;
-                fall_increment = 0.059;
-            }
+            servoInstruction = true;
+            delay_accumulated_time_ms = 0;
+            fall_increment = 0.059;
         }
-        else
-        {
-            servoInstruction = true;     
-        }
+        
     default:
         servoInstruction = false;
         break;
