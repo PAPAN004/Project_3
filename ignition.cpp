@@ -35,7 +35,7 @@ void ignitionInit()
     driverSeat.mode(PullDown);
 
     engine.write(OFF);
-    
+    ignitionState = B_OFF;
 }
 
 void delayAccumulate() {
