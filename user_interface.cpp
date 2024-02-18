@@ -42,7 +42,7 @@ static void userInterfaceDisplayUpdate()
 
         if (wiperMode == W_OFF){
         displayCharPositionWrite ( 12,0 );
-        displayStringWrite( "Off" );
+        displayStringWrite( "Off " );
         }
 
         if (wiperMode == W_HIGH){
@@ -52,7 +52,7 @@ static void userInterfaceDisplayUpdate()
 
         if (wiperMode == W_LO){
         displayCharPositionWrite ( 12,0 );
-        displayStringWrite( "Low" );
+        displayStringWrite( "Low " );
         }
 
         if (wiperMode == W_INT){
