@@ -150,7 +150,7 @@ void intModeUpdate()
 
 //=====[Implementations of private functions]===================================
 
-static void activateWiper(int speed, bool up, bool down)
+static void activateWiper(int speed)
 {
     static bool servoInstruction = true;
     static float rise_increment = 0.021;
@@ -191,9 +191,9 @@ static void activateWiper(int speed, bool up, bool down)
     }
 }
 
-static void delayAccumulate(int speed) 
+static void delayAccumulate(int increment) 
 {
-    delay(speed);
+    delay(increment);
     delay_accumulated_time_ms += 10;
 }
     
