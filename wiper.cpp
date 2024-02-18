@@ -34,7 +34,7 @@ PwmOut wiper(PF_9);
 
 //=====[Declarations (prototypes) of private functions]========================
 
-static void wActivated(int integermode, int speed);
+static void wActivated(int speed);
 
 //=====[Implementations of public functions]===================================
 
@@ -48,6 +48,7 @@ void servoInit()
 
 void wModeUpdate() {
     float f = modePotentiometer.read();
+
     // pot reading below 0.25, wipers set to off
     if (f <= W_OFF_TH)
     {   
@@ -70,29 +71,39 @@ void wModeUpdate() {
     }
 }
 
-void intModeUpdate() {
+void intModeUpdate()
+{
     float f = intPotentiometer.read();
-    if (wiperMode == W_INT) {
-        if (intervalMode == INT_SHORT) {
-            if (f > INT_SHORT_TH) {
+    if (wiperMode == W_INT) 
+    {    
+        switch ( intervalMode )
+        {
+        case (INT_SHORT) :
+            if (f > INT_SHORT_TH) 
+            {
                 intervalMode = INT_MEDIUM;
             }
-            return;
-        }
-        if (intervalMode == INT_MEDIUM) {
-            if (f < INT_SHORT_TH) {
+            break;
+            
+        case (INT_MEDIUM):
+            if (f < INT_SHORT_TH) 
+            {
                 intervalMode = INT_SHORT;
             }
-            if (f > INT_MEDIUM_TH) {
+            if (f > INT_MEDIUM_TH) 
+            {
                 intervalMode = INT_LONG;
             }
-            return;
-        }
-        if (intervalMode == INT_LONG) {
-            if (f < INT_MEDIUM_TH) {
+            break;
+
+        case (INT_LONG):
+        {
+            if (f < INT_MEDIUM_TH) 
+            {
                 intervalMode = INT_MEDIUM;
             }
-            return;
+            break;
+        }
         }
     }
 }
