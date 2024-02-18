@@ -48,7 +48,7 @@ void servoInit()
 
 void wModeUpdate() {
     float f = modePotentiometer.read();
-
+    
     // pot reading below 0.25, wipers set to off
     if (f <= W_OFF_TH)
     {   
@@ -97,13 +97,11 @@ void intModeUpdate()
             break;
 
         case (INT_LONG):
-        {
             if (f < INT_MEDIUM_TH) 
             {
                 intervalMode = INT_MEDIUM;
             }
             break;
-        }
         }
     }
 }
@@ -116,8 +114,9 @@ static void wActivated(int speed)
     static float rise_increment = 0.021;
     static float fall_increment = 0.059;
     
-    if (servoInstruction == true)
+    switch (servoInstruction)
     {
+    case(true):
         rise_increment = rise_increment + SPEED_INCREMENT;
         servo.write(rise_increment);
         //replace this with incrementor
@@ -129,9 +128,8 @@ static void wActivated(int speed)
             rise_increment = 0.021;
             break;
         }
-    }
-    if (servoInstruction == false)
-    {
+    
+    case(false):
         fall_increment = fall_increment - SPEED_INCREMENT;  
         servo.write(fall_increment);
         //replace this with incrementor
