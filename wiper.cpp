@@ -101,33 +101,33 @@ void intModeUpdate() {
 
 static void wActivated(int speed)
 {
-    static float pos_rise = 0.021;
-    static float pos_fall = 0.059;
+    static float rise_increment = 0.021;
+    static float fall_increment = 0.059;
     
     switch( servoState )
     {
-    case (servoUp):
-        pos_rise = pos_rise + SPEED_INCREMENT;
-        servo.write(pos_rise);
+    case (POSRISE):
+        rise_increment = rise_increment + SPEED_INCREMENT;
+        servo.write(rise_increment);
         //replace this with incrementor
         delay(speed);    
     
-        if (pos_rise >= DUTY_MAX)
+        if (pos_rise > DUTY_MAX)
         {    
-            servoState = servoDown;
-            pos_rise = 0.021;
+            servoState = POSFALL;
+            rise_increment = 0.021;
             break;
         }
-    case (servoDown):
-        pos_fall = pos_fall - SPEED_INCREMENT;  
-        servo.write(pos_fall);
+    case (POSFALL):
+        fall_increment = fall_increment - SPEED_INCREMENT;  
+        servo.write(fall_increment);
         //replace this with incrementor
         delay(speed);    
     
-        if (pos_fall <= DUTY_MIN )
+        if (fall_increment < DUTY_MIN )
             {
-            servoState = servoUp;
-            pos_fall = 0.059;
+            servoState = POSRISE;
+            fall_increment = 0.059;
             break;
             }
     }
