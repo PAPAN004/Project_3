@@ -7,6 +7,7 @@
 
 //=====[Declaration of public data types]======================================
 
+// this enumarated data type is used to tell the display module what state the wMode potentiometer
 typedef enum wMode {
     W_HIGH,
     W_LO,
@@ -14,12 +15,16 @@ typedef enum wMode {
     W_OFF,
 } wMode_t;
 
+// this enumarated data type is used to tell the display module what state the intMode potentiometer
 typedef enum intMode {
     INT_SHORT,
     INT_MEDIUM,
     INT_LONG,
 } intMode_t;
 
+typedef enum servoState {
+    
+}
 
 wMode_t wiperMode;
 intMode_t intervalMode;
