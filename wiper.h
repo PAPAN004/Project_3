@@ -23,12 +23,13 @@ typedef enum intMode {
 } intMode_t;
 
 typedef enum servoState {
-    
-}
+    POS_RISE,
+    POS_FALL,
+} servoState_t;
 
 wMode_t wiperMode;
 intMode_t intervalMode;
-
+servoState_t servoState;
 //=====[Declarations (prototypes) of public functions]=========================
 
 void servoInit();
