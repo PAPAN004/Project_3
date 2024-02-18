@@ -34,46 +34,18 @@ PwmOut wiper(PF_9);
 
 //=====[Declarations (prototypes) of private functions]========================
 
-static void servoRiseUpdate(int speed);
-static void servoFallUpdate(int speed);
+static void wActivated(int integermode, int speed);
+
 //=====[Implementations of public functions]===================================
 
 void servoInit()
 {
     servo.period(PERIOD_SEC);
     servo.write(DUTY_MIN);
+    servoState = servoUP;
 }
 
-static void servoRiseUpdate(int speed)
-{
-    static float pos_rise = 0.021;
-    pos_rise = pos_rise + SPEED_INCREMENT;
-    servo.write(pos_rise);
-    
-    //replace this with incrementor
-    delay(speed);    
-    
-    if pos_rise >= DUTY_MAX
-    {
-        pos_rise = 0.021;
-    }
-}
 
-static void servoFallUpdate(int speed)
-{
-    static float pos_fall = 0.059;
-    pos_fall = pos_fall - SPEED_INCREMENT;        
-    servo.write(pos_fall);
-    
-    //replace this with incrementor
-    delay(speed);
-    
-    if pos_fall <= DUTY_MIN 
-    {
-        pos_fall = 0.059;
-    }
-
-}
 void wModeUpdate() {
     float f = modePotentiometer.read();
     // pot reading below 0.25, wipers set to off
@@ -125,4 +97,40 @@ void intModeUpdate() {
     }
 }
 
+//=====[Implementations of private functions]===================================
 
+static void wActivated(int speed)
+{
+    static float pos_rise = 0.021;
+    static float pos_fall = 0.059;
+    
+    switch( servoState )
+    {
+    case (servoUp):
+        pos_rise = pos_rise + SPEED_INCREMENT;
+        servo.write(pos_rise);
+        //replace this with incrementor
+        delay(speed);    
+    
+        if (pos_rise >= DUTY_MAX)
+        {    
+            servoState = servoDown;
+            pos_rise = 0.021;
+            break;
+        }
+    case (servoDown):
+        pos_fall = pos_fall - SPEED_INCREMENT;  
+        servo.write(pos_fall);
+        //replace this with incrementor
+        delay(speed);    
+    
+        if (pos_fall <= DUTY_MIN )
+            {
+            servoState = servoUp;
+            pos_fall = 0.059;
+            break;
+            }
+    }
+}
+
+    
