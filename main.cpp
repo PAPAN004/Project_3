@@ -9,7 +9,8 @@ int main()
     ignitionInit();
     wiperInit();
     userInterfaceDisplayInit();
-    while (true);{
+    while (true)
+    {
         ignitionStateUpdate();
         wModeUpdate();
         intModeUpdate();
