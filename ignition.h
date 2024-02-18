@@ -18,7 +18,6 @@ ButtonState_t ignitionState;
 //=====[Declarations (prototypes) of public functions]=========================
 
 void ignitionInit();
-void delayAccumulate();
 void ignitionStateUpdate ();
 
 //=====[#include guards - end]=================================================
