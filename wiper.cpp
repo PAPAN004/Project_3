@@ -38,11 +38,12 @@ static void wActivated(int speed);
 
 //=====[Implementations of public functions]===================================
 
-void servoInit()
+void wiperInit()
 {
     servo.period(PERIOD_SEC);
     servo.write(DUTY_MIN);
-    servoState = servoUP;
+    wiperMode = W_OFF;
+    intervalMode = SHORT;
 }
 
 
