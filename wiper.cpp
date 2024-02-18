@@ -44,25 +44,31 @@ void servoInit()
 
 void servoRiseUpdate(int speed)
 {
-    float pos_rise = 0.021;
+    static float pos_rise = 0.021;
+    pos_rise = pos_rise + SPEED_INCREMENT;
+    servo.write(pos_rise);
     
-    for (pos_rise=0.021; pos_rise<DUTY_MAX; pos_rise = pos_rise + SPEED_INCREMENT)
+    //replace this with incrementor
+    delay(speed);    
+    
+    if pos_rise >= DUTY_MAX
     {
-        servo.write(pos_rise);
-        //replace this with incrementor
-        delay(speed);
+        pos_rise = 0.021;
     }
 }
 
 void servoFallUpdate(int speed)
 {
-    float pos_fall = 0.059;
+    static float pos_fall = 0.059;
+    pos_fall = pos_fall - SPEED_INCREMENT;        
+    servo.write(pos_fall);
     
-    for (pos_fall=0.059; pos_fall>DUTY_MIN; pos_fall = pos_fall - SPEED_INCREMENT)
+    //replace this with incrementor
+    delay(speed);
+    
+    if pos_fall <= DUTY_MIN 
     {
-        servo.write(pos_fall);
-        //replace this with incrementor
-        delay(speed);
+        pos_fall = 0.059;
     }
 
 }
@@ -87,7 +93,6 @@ void wModeUpdate() {
     else if (f > W_INT_TH)
     {
         wiperMode = W_INT;
-        intModeUpdate();
     }
 }
 
