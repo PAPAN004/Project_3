@@ -26,7 +26,7 @@ wMode_t wiperMode;
 intMode_t intervalMode;
 //=====[Declarations (prototypes) of public functions]=========================
 
-void wipersInit();
+void wiperInit();
 void wModeUpdate();
 void intModeUpdate();
 
