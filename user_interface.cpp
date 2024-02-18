@@ -21,7 +21,8 @@ static void userInterfaceDisplayInit();
 static void userInterfaceDisplayUpdate();
 //=====[Implementations of public functions]===================================
 //=====[Implementations of private functions]==================================
-static void userInterfaceDisplayInit()
+
+void userInterfaceDisplayInit()
 {
     displayInit();
      
@@ -32,7 +33,7 @@ static void userInterfaceDisplayInit()
     displayStringWrite( "Int-Speed:" );
 }
 
-static void userInterfaceDisplayUpdate()
+void userInterfaceDisplayUpdate()
 {
     static int accumulatedDisplayTime = 0;
     if( accumulatedDisplayTime >=
@@ -43,16 +44,22 @@ static void userInterfaceDisplayUpdate()
         if (wiperMode == W_OFF){
         displayCharPositionWrite ( 12,0 );
         displayStringWrite( "Off " );
+        displayCharPositionWrite ( 10,1 );
+        displayStringWrite( "      " );
         }
 
         if (wiperMode == W_HIGH){
         displayCharPositionWrite ( 12,0 );
         displayStringWrite( "High" );
+        displayCharPositionWrite ( 10,1 );
+        displayStringWrite( "      " );
         }
 
         if (wiperMode == W_LO){
         displayCharPositionWrite ( 12,0 );
         displayStringWrite( "Low " );
+        displayCharPositionWrite ( 10,1 );
+        displayStringWrite( "      " );
         }
 
         if (wiperMode == W_INT){
@@ -60,7 +67,7 @@ static void userInterfaceDisplayUpdate()
             displayStringWrite( "Int " );
             if (intervalMode == INT_SHORT){
                 displayCharPositionWrite ( 10,1 );
-                displayStringWrite( "Short" );
+                displayStringWrite( "Short " );
             }
 
             if (intervalMode == INT_MEDIUM){
