@@ -10,7 +10,6 @@ int main()
     wiperInit();
     userInterfaceDisplayInit();
     while (true);{
-        delayAccumulate();
         ignitionStateUpdate();
         wModeUpdate();
         intModeUpdate();
