@@ -10,6 +10,7 @@
 #define W_HIGH_TH   0.75 
 #define INT_SHORT_TH  0.3
 #define INT_MEDIUM_TH   0.7 
+#define INT_TIME_UP_DOWN   380
 
 #define PERIOD_SEC              0.02
 #define DUTY_MIN                0.021
@@ -158,14 +159,15 @@ static void activateWiper(int speed, bool up, bool down)
         // servo will not rise unless up_down is true
         if (up)
         {
-            //replace this with incrementor
-            delay(speed); 
+
             rise_increment = rise_increment + SPEED_INCREMENT;
             servo.write(rise_increment);
+            delayAccumulate(speed);
     
-            if (pos_rise > DUTY_MAX)
+            if ((pos_rise >= DUTY_MAX) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
             {    
                 servoInstruction = false;
+                delay_accumulated_time_ms = 0;
                 rise_increment = 0.021;
             }
         }
@@ -180,13 +182,14 @@ static void activateWiper(int speed, bool up, bool down)
         if (down)
         {
             //replace this with incrementor
-            delay(speed); 
             fall_increment = fall_increment - SPEED_INCREMENT;  
             servo.write(fall_increment);   
+            delayAccumulate(speed);
     
-            if (fall_increment < DUTY_MIN )
+            if ((fall_increment < DUTY_MIN ) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
             {
                 servoInstruction = true;
+                delay_accumulated_time_ms = 0;
                 fall_increment = 0.059;
             }
         }
