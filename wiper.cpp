@@ -40,7 +40,7 @@ int delay_accumulated_time_ms = 0;
 //=====[Declarations (prototypes) of private functions]========================
 
 static void activateWiper(int speed);
-
+static void delayAccumulate(int speed);
 //=====[Implementations of public functions]===================================
 
 void wiperInit()
@@ -191,10 +191,9 @@ static void activateWiper(int speed, bool up, bool down)
     }
 }
 
-void delayAccumulate(int speed) 
+static void delayAccumulate(int speed) 
 {
     delay(speed);
     delay_accumulated_time_ms += 10;
-    
 }
     
