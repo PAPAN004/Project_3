@@ -34,7 +34,7 @@ PwmOut wiper(PF_9);
 
 //=====[Declarations (prototypes) of private functions]========================
 
-static void activateWiper(int speed);
+static void activateWiper(int speed, bool up, bool down);
 
 //=====[Implementations of public functions]===================================
 
