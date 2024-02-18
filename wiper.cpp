@@ -169,7 +169,7 @@ static void activateWiper(int speed, bool up, bool down)
             servo.write(rise_increment);
             delayAccumulate(speed);
     
-            if ((pos_rise >= DUTY_MAX) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
+            if ((rise_increment >= DUTY_MAX) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
             {    
                 servoInstruction = false;
                 delay_accumulated_time_ms = 0;
