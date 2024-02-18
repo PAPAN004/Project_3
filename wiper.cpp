@@ -49,26 +49,46 @@ void wiperInit()
 
 void wModeUpdate() {
     float f = modePotentiometer.read();
+
+    switch ( wiperMode )
+    {
+    case(W_OFF):
+        // pot reading above 0.25 in this state, wipers set to low
+        if (f > W_OFF_TH)
+        {   
+            wiperMode = W_LOW;
+        }
+        break;
     
-    // pot reading below 0.25, wipers set to off
-    if (f <= W_OFF_TH)
-    {   
+    case(W_LOW):
+
+        // pot reading below 0.25 in this state, wipers set to off
+        if (f < W_OFF_TH)
+        {
+            wiperMode = W_OFF;
+        }
+        // pot reading above 0.50 in this state, wipers set to high
+        else if (f > W_LO_TH)
+        {
+            wiperMode = W_HIGH;
+        }
+        break;
+
+    case(W_HIGH):
+        // pot reading is below 0.50 in this state, wipers set to low
+        if( f < W_LO_TH)
+        {
+            wiperMode = W_LOW;
+        }
+        // pot reading is above 0.75 in this state, wipers set to interval
+        else if (f > W_HIGH_TH)
+        {
+            wiperMode = W_INT;
+        }
+        break;
+        
+    default:
         wiperMode = W_OFF;
-    }
-    // pot reading is between 0.25 and 0.50, wipers set to low
-    else if (f > W_OFF_TH && f <= W_HIGH_TH)
-    {
-        wiperMode = W_LOW;
-    }
-    // pot reading is between 0.50 and 0.75, wipers set to high
-    else if (f > W_HIGH_TH && f <= W_INT_TH)
-    {
-        wiperMode = W_HIGH;
-    }
-    // pot reading is above 0.75, wipers set to interval
-    else if (f > W_INT_TH)
-    {
-        wiperMode = W_INT;
     }
 }
 
@@ -91,7 +111,7 @@ void intModeUpdate()
             {
                 intervalMode = INT_SHORT;
             }
-            if (f > INT_MEDIUM_TH) 
+            else if (f > INT_MEDIUM_TH) 
             {
                 intervalMode = INT_LONG;
             }
@@ -102,6 +122,10 @@ void intModeUpdate()
             {
                 intervalMode = INT_MEDIUM;
             }
+            break;
+
+        default:
+            intervalMode = INT_SHORT;
             break;
         }
     }
@@ -118,10 +142,10 @@ static void wActivated(int speed)
     switch (servoInstruction)
     {
     case(true):
+        //replace this with incrementor
+        delay(speed); 
         rise_increment = rise_increment + SPEED_INCREMENT;
         servo.write(rise_increment);
-        //replace this with incrementor
-        delay(speed);    
     
         if (pos_rise > DUTY_MAX)
         {    
@@ -131,10 +155,10 @@ static void wActivated(int speed)
         }
     
     case(false):
-        fall_increment = fall_increment - SPEED_INCREMENT;  
-        servo.write(fall_increment);
         //replace this with incrementor
-        delay(speed);    
+        delay(speed); 
+        fall_increment = fall_increment - SPEED_INCREMENT;  
+        servo.write(fall_increment);   
     
         if (fall_increment < DUTY_MIN )
         {
@@ -142,6 +166,9 @@ static void wActivated(int speed)
             fall_increment = 0.059;
             break;
         }
+    default:
+        servoInstruction = false;
+        break;
     }
 }
 
