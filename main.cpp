@@ -14,5 +14,6 @@ int main()
         wModeUpdate();
         intModeUpdate();
         userInterfaceDisplayUpdate();
+        delay(10);
     }
 }
