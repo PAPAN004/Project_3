@@ -17,6 +17,8 @@
 #define DUTY_MAX                0.059
 
 #define SPEED_INCREMENT         0.001
+#define TIME_INCREMENT_HI_MS    10
+#define TIME_INCREMENT_LO_MS    60
 
 //=====[Declaration of private data types]=====================================
 
@@ -36,6 +38,7 @@ PwmOut wiper(PF_9);
 //=====[Declarations (prototypes) of private functions]========================
 
 static void activateWiper(int speed, bool up, bool down);
+void delayAccumulate(int speed);
 
 //=====[Implementations of public functions]===================================
 
@@ -203,4 +206,10 @@ static void activateWiper(int speed, bool up, bool down)
     }
 }
 
+void delayAccumulate(int speed) 
+{
+    delay(speed);
+    delay_accumulated_time_ms += 10;
+    
+}
     
