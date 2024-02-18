@@ -67,7 +67,7 @@ void wModeUpdate() {
     
     case(W_LOW):
 
-        activateWiper(20);
+        activateWiper(TIME_INCREMENT_LO_MS);
         
         // pot reading below 0.25 in this state, wipers set to off
         if (f < W_OFF_TH)
@@ -83,7 +83,7 @@ void wModeUpdate() {
 
     case(W_HIGH):
 
-        activateWiper(10);
+        activateWiper(TIME_INCREMENT_HI_MS);
         
         // pot reading is below 0.50 in this state, wipers set to low
         if( f < W_LOW_TH)
