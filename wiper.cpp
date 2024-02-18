@@ -6,7 +6,7 @@
 //=====[Declaration of private defines]========================================
 
 #define W_OFF_TH   0.25
-#define W_LO_TH  0.50
+#define W_LOW_TH  0.50
 #define W_HIGH_TH   0.75 
 #define INT_SHORT_TH  0.3
 #define INT_MEDIUM_TH   0.7 
@@ -68,7 +68,7 @@ void wModeUpdate() {
             wiperMode = W_OFF;
         }
         // pot reading above 0.50 in this state, wipers set to high
-        else if (f > W_LO_TH)
+        else if (f > W_LOW_TH)
         {
             wiperMode = W_HIGH;
         }
@@ -76,7 +76,7 @@ void wModeUpdate() {
 
     case(W_HIGH):
         // pot reading is below 0.50 in this state, wipers set to low
-        if( f < W_LO_TH)
+        if( f < W_LOW_TH)
         {
             wiperMode = W_LOW;
         }
@@ -86,6 +86,13 @@ void wModeUpdate() {
             wiperMode = W_INT;
         }
         break;
+
+    case(W_INT):
+        // if pot reading is below 0.75 in this state, wipers set to high
+        if ( f < W_HIGH_TH)
+        {
+            wiperMode = W_HIGH;
+        }
         
     default:
         wiperMode = W_OFF;
