@@ -93,7 +93,7 @@ void wModeUpdate() {
 
 void intModeUpdate() {
     float f = intPotentiometer.read();
-    //if (wiperMode == W_INT) {
+    if (wiperMode == W_INT) {
         if (intervalMode == INT_SHORT) {
             if (f > INT_SHORT_TH) {
                 intervalMode = INT_MEDIUM;
