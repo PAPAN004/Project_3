@@ -45,10 +45,10 @@ static void delayAccumulate(int speed);
 
 void wiperInit()
 {
-    servo.period(PERIOD_SEC);
-    servo.write(DUTY_MIN);
+    wiper.period(PERIOD_SEC);
+    wiper.write(DUTY_MIN);
     wiperMode = W_OFF;
-    intervalMode = SHORT;
+    intervalMode = INT_SHORT;
 }
 
 
@@ -58,14 +58,15 @@ void wModeUpdate() {
     switch ( wiperMode )
     {
     case(W_OFF):
+        wiper.write(DUTY_MIN);
         // pot reading above 0.25 in this state, wipers set to low
         if (f > W_OFF_TH)
         {   
-            wiperMode = W_LOW;
+            wiperMode = W_LO;
         }
         break;
     
-    case(W_LOW):
+    case(W_LO):
 
         activateWiper(TIME_INCREMENT_LO_MS);
         
@@ -88,7 +89,7 @@ void wModeUpdate() {
         // pot reading is below 0.50 in this state, wipers set to low
         if( f < W_LOW_TH)
         {
-            wiperMode = W_LOW;
+            wiperMode = W_LO;
         }
         // pot reading is above 0.75 in this state, wipers set to interval
         else if (f > W_HIGH_TH)
@@ -161,7 +162,7 @@ static void activateWiper(int speed)
     case(true):
 
         rise_increment = rise_increment + SPEED_INCREMENT;
-        servo.write(rise_increment);
+        wiper.write(rise_increment);
         delayAccumulate(speed);
          
         if ((rise_increment >= DUTY_MAX) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
@@ -173,9 +174,9 @@ static void activateWiper(int speed)
         break;
         
     case(false):
-        //replace this with incrementor
+        
         fall_increment = fall_increment - SPEED_INCREMENT;  
-        servo.write(fall_increment);   
+        wiper.write(fall_increment);   
         delayAccumulate(speed);
 
         if ((fall_increment < DUTY_MIN ) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
@@ -184,7 +185,8 @@ static void activateWiper(int speed)
             delay_accumulated_time_ms = 0;
             fall_increment = 0.059;
         }
-        
+        break;
+
     default:
         servoInstruction = false;
         break;
@@ -196,4 +198,3 @@ static void delayAccumulate(int increment)
     delay(increment);
     delay_accumulated_time_ms += 10;
 }
-    
