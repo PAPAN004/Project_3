@@ -85,8 +85,9 @@ static void displayCodeWrite( bool type, uint8_t dataBus );
 
 void displayInit()
 {
+    // 50 ms display allows the LCD screen to stabilize after it is powered on
     delay( 50 );
-    
+
     displayCodeWrite( DISPLAY_RS_INSTRUCTION, 
                       DISPLAY_IR_FUNCTION_SET | 
                       DISPLAY_IR_FUNCTION_SET_8BITS );
