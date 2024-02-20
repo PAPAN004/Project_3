@@ -6,7 +6,6 @@
 
 //=====[Declaration of private defines]========================================
 
-#define DELAY_MS    10
 #define DEBOUNCE_MS 50
 
 //=====[Declaration of private data types]=====================================
