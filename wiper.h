@@ -21,6 +21,7 @@ typedef enum intMode {
     INT_MEDIUM,
     INT_LONG,
 } intMode_t;
+
 // this enumarated data type is used to tell the system what point the servo motor is at
 typedef enum sMode{
     S_RISE,
