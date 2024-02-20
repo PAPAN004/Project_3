@@ -17,8 +17,8 @@
 //=====[Declaration and initialization of public global variables]=============
 //=====[Declaration and initialization of private global variables]============
 //=====[Declarations (prototypes) of private functions]========================
-static void userInterfaceDisplayInit();
-static void userInterfaceDisplayUpdate();
+void userInterfaceDisplayInit();
+void userInterfaceDisplayUpdate();
 //=====[Implementations of public functions]===================================
 //=====[Implementations of private functions]==================================
 
@@ -36,54 +36,61 @@ void userInterfaceDisplayInit()
 void userInterfaceDisplayUpdate()
 {
     static int accumulatedDisplayTime = 0;
-    if( accumulatedDisplayTime >=
-        DISPLAY_REFRESH_TIME_MS ) {
+    if( accumulatedDisplayTime >= DISPLAY_REFRESH_TIME_MS ) 
+    {
 
         accumulatedDisplayTime = 0;
 
-        if (wiperMode == W_OFF){
+        if (wiperMode == W_OFF)
+        {
         displayCharPositionWrite ( 12,0 );
         displayStringWrite( "Off " );
         displayCharPositionWrite ( 10,1 );
         displayStringWrite( "      " );
         }
 
-        if (wiperMode == W_HIGH){
+        if (wiperMode == W_HIGH)
+        {
         displayCharPositionWrite ( 12,0 );
         displayStringWrite( "High" );
         displayCharPositionWrite ( 10,1 );
         displayStringWrite( "      " );
         }
 
-        if (wiperMode == W_LO){
+        if (wiperMode == W_LO)
+        {
         displayCharPositionWrite ( 12,0 );
         displayStringWrite( "Low " );
         displayCharPositionWrite ( 10,1 );
         displayStringWrite( "      " );
         }
 
-        if (wiperMode == W_INT){
+        if (wiperMode == W_INT)
+        {
             displayCharPositionWrite ( 12,0 );
             displayStringWrite( "Int " );
-            if (intervalMode == INT_SHORT){
+            if (intervalMode == INT_SHORT)
+            {
                 displayCharPositionWrite ( 10,1 );
                 displayStringWrite( "Short " );
             }
 
-            if (intervalMode == INT_MEDIUM){
+            if (intervalMode == INT_MEDIUM)
+            {
                 displayCharPositionWrite ( 10,1 );
                 displayStringWrite( "Medium" );
             }
 
-            if (intervalMode == INT_LONG){
+            if (intervalMode == INT_LONG)
+            {
                 displayCharPositionWrite ( 10,1 );
                 displayStringWrite( "Long  " );
             }
         }
 
 
-    } else {
-        accumulatedDisplayTime =
-            accumulatedDisplayTime + SYSTEM_TIME_INCREMENT_MS;        
+    } else 
+    {
+        accumulatedDisplayTime = accumulatedDisplayTime + DELAY_MS;        
     } 
 }
