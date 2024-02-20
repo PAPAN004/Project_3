@@ -64,35 +64,39 @@ void wiperInit()
 }
 
 
-void wModeUpdate() {
-    if (engine == ON) {
+void wModeUpdate() 
+{
+    if (engine == ON) 
+    {
         wiper_potentiometer_read();
     }
 
     switch ( wiperMode )
     {
     case(W_OFF):
-        if (servoInstruction != S_HOLD) {
-                activateWiper(TIME_INCREMENT_LO_MS);
-            }
+        if (servoInstruction != S_HOLD) 
+        {
+            activateWiper(TIME_INCREMENT_LO_MS);
+        }
             break;
 
     case(W_LO):
-        if (engine == ON){
+        if (engine == ON)
+        {
             activateWiper(TIME_INCREMENT_LO_MS);
-
         }
         break;
         
     case(W_HIGH):
-        if (engine == ON){
+        if (engine == ON)
+        {
             activateWiper(TIME_INCREMENT_HI_MS);
-
         }
         break;
 
     case(W_INT):
-        if (engine == ON){
+        if (engine == ON)
+        {
             timer_int_mode_ms += 10;
             intModeUpdate();
         }
@@ -104,29 +108,41 @@ void wModeUpdate() {
     }
 }
 
-void potentiometer_read(){
+void potentiometer_read()
+{
     float f = intPotentiometer.read();
-    if (f < INT_SHORT_TH){
+    if (f < INT_SHORT_TH)
+    {
         intervalMode = INT_SHORT;
     }
-    else if (f > INT_MEDIUM_TH){
+    else if (f > INT_MEDIUM_TH)
+    {
         intervalMode = INT_LONG;
     }
-    else{
+    else
+    {
         intervalMode = INT_MEDIUM;
     }
 }
 
-void wiper_potentiometer_read() {
+void wiper_potentiometer_read() 
+{
     float f = modePotentiometer.read();
 
-    if (f > W_HIGH_TH) {
+    if (f > W_HIGH_TH) 
+    {
         wiperMode = W_INT;
-    } else if (f > W_LOW_TH) {
+    } 
+    else if (f > W_LOW_TH)
+    {
         wiperMode = W_HIGH;
-    } else if (f >= W_OFF_TH) {
+    } 
+    else if (f >= W_OFF_TH) 
+    {
         wiperMode = W_LO;
-    } else {
+    } 
+    else 
+    {
         wiperMode = W_OFF;
     }
 }
@@ -140,28 +156,33 @@ void intModeUpdate()
         switch ( intervalMode )
         {
         case (INT_SHORT) :
-            if (timer_int_mode_ms >= SHORT_TIME) {
+            if (timer_int_mode_ms >= SHORT_TIME) 
+            {
                 activateWiper(TIME_INCREMENT_LO_MS);
                 function_counter ++;
-                if(function_counter == COUNTER_LIMIT){
+                if(function_counter == COUNTER_LIMIT)
+                {
                     timer_int_mode_ms = 0;
                     function_counter = 0;
                 }
             }
-            else{
+            else
+            {
                 wiper.write(DUTY_MIN);
                 timer_int_mode_ms += 10;
             }
             break;
             
         case (INT_MEDIUM):
-            if (timer_int_mode_ms >= MEDIUM_TIME) {
+            if (timer_int_mode_ms >= MEDIUM_TIME) 
+            {
                     activateWiper(TIME_INCREMENT_LO_MS);
                     function_counter ++;
-                    if(function_counter == COUNTER_LIMIT){
+                    if(function_counter == COUNTER_LIMIT)
+                    {
                         timer_int_mode_ms = 0;
                         function_counter = 0;
-                }
+                    }
                     
             }
             else{
