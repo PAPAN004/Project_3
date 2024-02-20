@@ -10,9 +10,12 @@
 
 int main()
 {
+    //initializations of each main subsystem
     ignitionInit();
     wiperInit();
     userInterfaceDisplayInit();
+    
+    // functionality of the system
     while (true)
     {
         ignitionStateUpdate();
