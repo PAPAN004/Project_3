@@ -29,17 +29,23 @@ int debounce_accumulated_time_ms = 0;
 
 void ignitionInit()
 {
+    // set ignition button to a pulldown resistor
     ignition.mode(PullDown);
+    // set dirver's seat pushbutton to a pulldown resistor
     driverSeat.mode(PullDown);
 
+    //the engine should only be on if the the requirements of the ignition subsystem are met
     engine.write(OFF);
     ignitionState = B_OFF;
 }
 
+//must  debounce button and set to only send a signal on release 
 void ignitionStateUpdate () 
 {
+    // define variables reading the states of each button
     bool ds = driverSeat.read();
     bool ig = ignition.read();
+
     if (ignitionState == B_OFF && ig == ON) 
     {
         ignitionState = B_RISING;
@@ -50,6 +56,7 @@ void ignitionStateUpdate ()
         ignitionState = B_FALLING;
         debounce_accumulated_time_ms = 0;
     }
+    // prevents bouncing sending multiple upon one button press
     if ((ignitionState == B_RISING) && (debounce_accumulated_time_ms >= DEBOUNCE_MS)) 
     {
         if (ig == ON) {
@@ -59,6 +66,7 @@ void ignitionStateUpdate ()
             ignitionState = B_OFF;
         }
     }
+    // only register button press upon release
     if ((ignitionState == B_FALLING) && (debounce_accumulated_time_ms >= DEBOUNCE_MS)) 
     {
         if (ig == ON) 
