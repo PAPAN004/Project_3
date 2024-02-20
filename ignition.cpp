@@ -37,18 +37,22 @@ void ignitionInit()
     ignitionState = B_OFF;
 }
 
-void ignitionStateUpdate () {
+void ignitionStateUpdate () 
+{
     bool ds = driverSeat.read();
     bool ig = ignition.read();
-    if (ignitionState == B_OFF && ig == ON) {
+    if (ignitionState == B_OFF && ig == ON) 
+    {
         ignitionState = B_RISING;
         debounce_accumulated_time_ms = 0;
     }
-    if (ignitionState == B_ON && ig == OFF) {
+    if (ignitionState == B_ON && ig == OFF) 
+    {
         ignitionState = B_FALLING;
         debounce_accumulated_time_ms = 0;
     }
-    if ((ignitionState == B_RISING) && (debounce_accumulated_time_ms >= DEBOUNCE_MS)) {
+    if ((ignitionState == B_RISING) && (debounce_accumulated_time_ms >= DEBOUNCE_MS)) 
+    {
         if (ig == ON) {
             ignitionState = B_ON;
         }
@@ -56,18 +60,24 @@ void ignitionStateUpdate () {
             ignitionState = B_OFF;
         }
     }
-    if ((ignitionState == B_FALLING) && (debounce_accumulated_time_ms >= DEBOUNCE_MS)) {
-        if (ig == ON) {
+    if ((ignitionState == B_FALLING) && (debounce_accumulated_time_ms >= DEBOUNCE_MS)) 
+    {
+        if (ig == ON) 
+        {
             ignitionState = B_ON;
         }
-        else {
+        else 
+        {
             ignitionState = B_OFF;
-            if (ds == ON && engine == OFF) {
+            if (ds == ON && engine == OFF) 
+            {
                 engine.write(ON);
                 return;
             }
-            if (engine == ON) {
+            if (engine == ON) 
+            {
                 engine.write(OFF);
+                wiperMode = W_OFF;
             }
         }
     }
