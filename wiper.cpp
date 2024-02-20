@@ -40,7 +40,7 @@ AnalogIn intPotentiometer(A1);
 PwmOut wiper(PF_9);
 
 //=====[Declaration of external public global variables]=======================
-
+int debounce_accumulated_time_ms = 0;
 //=====[Declaration and initialization of public global variables]=============
 
 //=====[Declaration and initialization of private global variables]============
@@ -52,6 +52,7 @@ int delay_accumulated_time_ms = 0;
 static void wiper_potentiometer_read();
 static void potentiometer_read();
 static void activateWiper(int speed);
+static void delayAccumulate(int speed);
 
 //=====[Implementations of public functions]===================================
 
