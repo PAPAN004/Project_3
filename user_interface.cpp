@@ -17,11 +17,14 @@
 //=====[Declaration and initialization of public global variables]=============
 //=====[Declaration and initialization of private global variables]============
 //=====[Declarations (prototypes) of private functions]========================
+
 void userInterfaceDisplayInit();
 void userInterfaceDisplayUpdate();
+
 //=====[Implementations of public functions]===================================
 //=====[Implementations of private functions]==================================
 
+//this function initializes the LCD display with the words "Wiper-Mode:" and "Int-Speed:" prior to any information being fed into it
 void userInterfaceDisplayInit()
 {
     displayInit();
@@ -33,6 +36,7 @@ void userInterfaceDisplayInit()
     displayStringWrite( "Int-Speed:" );
 }
 
+//upon any changes in the movement of the servo, the LCD display will be updated to reflect these changes
 void userInterfaceDisplayUpdate()
 {
     static int accumulatedDisplayTime = 0;
