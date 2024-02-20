@@ -18,16 +18,15 @@ DigitalIn driverSeat(D14);
 DigitalOut engine(LED2);
 
 //=====[Declaration of external public global variables]=======================
-
+int debounce_accumulated_time_ms = 0;
 //=====[Declaration and initialization of public global variables]=============
 
 //=====[Declaration and initialization of private global variables]============
 
-int debounce_accumulated_time_ms = 0;
-
 //=====[Declarations (prototypes) of private functions]========================
 
 //=====[Implementations of public functions]===================================
+
 void ignitionInit()
 {
     ignition.mode(PullDown);
