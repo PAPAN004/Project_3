@@ -1,8 +1,11 @@
 //=====[#include guards - begin]===============================================
+
 #ifndef _IGNITION_H_
 #define _IGNITION_H_
 
 //=====[Declaration of public defines]=========================================
+
+#define DELAY_MS    10
 
 //=====[Declaration of public data types]======================================
 
