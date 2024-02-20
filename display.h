@@ -10,9 +10,7 @@
 //=====[Declarations (prototypes) of public functions]=========================
 
 void displayInit( void );
- 
 void displayCharPositionWrite( uint8_t charPositionX, uint8_t charPositionY );
-
 void displayStringWrite( const char * str );
 
 //=====[#include guards - end]=================================================
