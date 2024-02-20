@@ -40,7 +40,9 @@ AnalogIn intPotentiometer(A1);
 PwmOut wiper(PF_9);
 
 //=====[Declaration of external public global variables]=======================
+
 int debounce_accumulated_time_ms = 0;
+
 //=====[Declaration and initialization of public global variables]=============
 
 //=====[Declaration and initialization of private global variables]============
@@ -56,6 +58,7 @@ static void delayAccumulate(int speed);
 
 //=====[Implementations of public functions]===================================
 
+//initializes all wiper settings before entering loop in main function
 void wiperInit()
 {
     wiper.period(PERIOD_SEC);
@@ -65,7 +68,7 @@ void wiperInit()
     servoInstruction = S_HOLD;
 }
 
-
+//changes the wiper-mode depending on the current input from the potentiometer assigned to the wiper-mode
 void wModeUpdate() 
 {
     if (engine == ON) 
@@ -76,34 +79,38 @@ void wModeUpdate()
     switch ( wiperMode )
     {
     case(W_OFF):
+//if the servo is currently moving and the wiper-mode is turned to off, the servo will return to its initial position
         if (servoInstruction != S_HOLD) 
         {
             activateWiper(TIME_INCREMENT_LO_MS);
         }
             break;
-
+//wiper-mode will enter low-mode only if the engine is on
     case(W_LO):
         if (engine == ON)
         {
             activateWiper(TIME_INCREMENT_LO_MS);
         }
         break;
-        
+//wiper-mode will enter high-mode only if the engine is on     
     case(W_HIGH):
         if (engine == ON)
         {
             activateWiper(TIME_INCREMENT_HI_MS);
         }
         break;
-
+//wiper-mode will enter intermittent-mode only if the engine is on. A timer-variable is used to keep track of the
+//relevant periods in the intermittent-mode.
     case(W_INT):
         if (engine == ON)
         {
+//The timer-variable is incremented by 10 ms upon each run of the wModeUpdate() function
             timer_int_mode_ms += 10;
+//intModeUpdate() function is called to then determine the current intermittent-mode setting
             intModeUpdate();
         }
         break;
-
+//if no mode is currently specified for wiper-mode, the mode will default to off
     default:
         wiperMode = W_OFF;
         
@@ -112,6 +119,8 @@ void wModeUpdate()
 
 void potentiometer_read()
 {
+//potentiometer assigned to intermittent-mode will be assigned the 
+//variable f to then be compared to previously determined threshold values
     float f = intPotentiometer.read();
     if (f < INT_SHORT_TH)
     {
@@ -129,6 +138,8 @@ void potentiometer_read()
 
 void wiper_potentiometer_read() 
 {
+//potentiometer assigned to wiper-mode will be assigned the 
+//variable f to then be compared to previously determined threshold values
     float f = modePotentiometer.read();
 
     if (f > W_HIGH_TH) 
@@ -158,10 +169,14 @@ void intModeUpdate()
         switch ( intervalMode )
         {
         case (INT_SHORT) :
+//when the value timer_variable reaches the same or greater value than the SHORT_TIME macro
+//the following code will be used. This condition was used to implement the delays of the intermittent-mode
             if (timer_int_mode_ms >= SHORT_TIME) 
             {
                 activateWiper(TIME_INCREMENT_LO_MS);
                 function_counter ++;
+//the activateWiper function only needs to be called so many times within the delay period
+//the use of a function_counter allows us to keep track of the amount of calls
                 if(function_counter == COUNTER_LIMIT)
                 {
                     timer_int_mode_ms = 0;
@@ -170,6 +185,7 @@ void intModeUpdate()
             }
             else
             {
+//servo will remain at initial position and increase in increments of 10 ms until target value is reached
                 wiper.write(DUTY_MIN);
                 timer_int_mode_ms += 10;
             }
@@ -216,22 +232,24 @@ void intModeUpdate()
 
 void activateWiper(int speed)
 {
+//minimum value upwards that the servo moves
     static float rise_increment = DUTY_MIN;
+//maximum value upwards that the servo moves
     static float fall_increment = DUTY_MAX;
     
     switch (servoInstruction)
     {
-
+//servo will not perform any movement in this case
     case(S_HOLD):
         servoInstruction = S_RISE;
         break;
-
+//servo will move upward, applying tiny delays between each interval between its minimum and maximum value
     case(S_RISE):
 
         rise_increment = rise_increment + SPEED_INCREMENT;
         wiper.write(rise_increment);
         delayAccumulate(speed);
-         
+//servo will only go downwards once total time upward and upward position is reached
         if ((rise_increment >= DUTY_MAX) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
         {    
             servoInstruction = S_FALL;
@@ -239,13 +257,13 @@ void activateWiper(int speed)
             rise_increment = DUTY_MIN;
         }
         break;
-        
+//servo will move downward, applying tiny delays between each interval between its minimum and maximum value        
     case(S_FALL):
-        //replace this with incrementor
+
         fall_increment = fall_increment - SPEED_INCREMENT;  
         wiper.write(fall_increment);   
         delayAccumulate(speed);
-
+//servo will go to off position once revolution is completed upwards and downwards
         if ((fall_increment < DUTY_MIN ) && (delay_accumulated_time_ms >= INT_TIME_UP_DOWN))
         {
             servoInstruction = S_HOLD;
@@ -253,13 +271,13 @@ void activateWiper(int speed)
             fall_increment = DUTY_MAX;
         }
         break;
-
+//when current case is undetermined, the case will default to the downward movement
     default:
         servoInstruction = S_FALL;
         break;
     }
 }
-
+//applys delays of 10 ms and adds 10ms to the various timer functions used
 void delayAccumulate(int increment) 
 {
     delay(increment);
