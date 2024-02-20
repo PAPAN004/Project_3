@@ -22,8 +22,15 @@ typedef enum intMode {
     INT_LONG,
 } intMode_t;
 
+typedef enum sMode{
+    S_RISE,
+    S_FALL,
+    S_HOLD,
+} sMode_t;
+
 wMode_t wiperMode;
 intMode_t intervalMode;
+sMode_t servoInstruction;
 //=====[Declarations (prototypes) of public functions]=========================
 
 void wiperInit();
