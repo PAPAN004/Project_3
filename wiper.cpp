@@ -48,10 +48,11 @@ PwmOut wiper(PF_9);
 int delay_accumulated_time_ms = 0;
 
 //=====[Declarations (prototypes) of private functions]========================
+
 static void wiper_potentiometer_read();
 static void potentiometer_read();
 static void activateWiper(int speed);
-static void delayAccumulate(int speed);
+
 //=====[Implementations of public functions]===================================
 
 void wiperInit()
