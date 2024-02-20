@@ -3,7 +3,9 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
 #include "wiper.h"
+
 //=====[Declaration of private defines]========================================
+
 #define W_OFF_TH   0.25
 #define W_LOW_TH  0.50
 #define W_HIGH_TH   0.75 
